@@ -1,0 +1,54 @@
+html,body{ height: 100%; }
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: #f0f0f0;
+}
+
+.public-DraftEditor-content{
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  top: 2em;
+  right: 2em;
+  position: absolute;
+  padding: 1em;
+  left: 2em;
+  bottom: 4em;
+}
+
+.search-and-replace{
+  position: absolute;
+  z-index: 999;
+  bottom: 1em;
+  left: 2em;
+}
+
+.search-and-replace > *{
+  border: 1px solid #ccc;
+  border-radius: 0;
+  font-size: 1em;
+  border-right: none;
+  padding: .4em .5em;
+}
+
+.search-and-replace > *:first-child{
+  border-bottom-left-radius: 9px;
+  border-top-left-radius: 9px;
+}
+
+.search-and-replace > *:last-child{
+  border-bottom-right-radius: 9px;
+  border-right: 1px solid #ccc;
+  border-top-right-radius: 9px;
+}
+
+.search-and-replace button{
+  cursor: pointer;
+  background: #f3f3f3;
+  transition: 200ms background;
+}
+
+.search-and-replace button:hover{
+  background: #f9f9f9;
+}
