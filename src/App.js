@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { EditorState, Editor, CompositeDecorator } from 'draft-js';
+import { EditorState, Editor, CompositeDecorator, SelectionState, Modifier } from 'draft-js';
 
 const findWithRegex = (regex, contentBlock, callback) => {
   const text = contentBlock.getText();
@@ -61,7 +61,43 @@ class App extends Component {
   }
 
   onReplace = () => {
-    console.log(`replacing "${this.state.search}" with "${this.state.replace}"`);
+    const regex = new RegExp(this.state.search, 'g');
+    const { editorState } = this.state;
+
+    const selectionsToReplace = [];
+
+    const blockMap = editorState.getCurrentContent().getBlockMap();
+
+    blockMap.forEach((contentBlock) => (
+      findWithRegex(regex, contentBlock, (start, end) => {
+        const blockKey = contentBlock.getKey();
+        const blockSelection = SelectionState
+          .createEmpty(blockKey)
+          .merge({
+            anchorOffset: start,
+            focusOffset: end,
+          });
+
+        selectionsToReplace.push(blockSelection)
+      })
+    ));
+    
+    let contentState = editorState.getCurrentContent();
+
+    selectionsToReplace.forEach(selectionState => {
+      contentState = Modifier.replaceText(
+        contentState,
+        selectionState,
+        this.state.replace,
+      )
+    });
+
+    this.setState({
+      editorState: EditorState.push(
+        editorState,
+        contentState,
+      )
+    })
   }
 
   onChange = (editorState) => {
