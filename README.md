@@ -1,5 +1,5 @@
 # Draft js tutorial code - Building search & replace.
-This is the code accompanying an article on how to build search & replace functionality with draft.js
+This is the code accompanying an article on how to [build search & replace functionality with draft.js](https://reactrocket.com/post/draft-js-search-and-replace/)
 
 -------------
 
