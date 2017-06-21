@@ -61,12 +61,11 @@ class App extends Component {
   }
 
   onReplace = () => {
-    const regex = new RegExp(this.state.search, 'g');
-    const { editorState } = this.state;
-
+    const { editorState, search, replace } = this.state;
+    const regex = new RegExp(search, 'g');
     const selectionsToReplace = [];
-
-    const blockMap = editorState.getCurrentContent().getBlockMap();
+    let contentState = editorState.getCurrentContent();
+    const blockMap = contentState.getBlockMap();
 
     blockMap.forEach((contentBlock) => (
       findWithRegex(regex, contentBlock, (start, end) => {
@@ -82,13 +81,11 @@ class App extends Component {
       })
     ));
     
-    let contentState = editorState.getCurrentContent();
-
     selectionsToReplace.forEach(selectionState => {
       contentState = Modifier.replaceText(
         contentState,
         selectionState,
-        this.state.replace,
+        replace,
       )
     });
 
