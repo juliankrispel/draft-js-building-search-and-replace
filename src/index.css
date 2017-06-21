@@ -52,3 +52,7 @@ body {
 .search-and-replace button:hover{
   background: #f9f9f9;
 }
+
+.search-and-replace-highlight {
+  background: yellow;
+}
