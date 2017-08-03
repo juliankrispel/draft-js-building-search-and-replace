@@ -1,14 +1,23 @@
 import React, { Component } from 'react';
 import { EditorState, Editor, CompositeDecorator, SelectionState, Modifier } from 'draft-js';
 
+const getFindIndexes = (regex, text) => {
+  const result = [];
+  let matchArr;
+
+  while ((matchArr = regex.exec(text)) !== null) {
+    const start = matchArr.index;
+    const end = start + matchArr[0].length;
+    result.push({start, end});
+  }
+  return result;
+};
+
 const findWithRegex = (regex, contentBlock, callback) => {
   const text = contentBlock.getText();
-  let matchArr, start, end;
-  while ((matchArr = regex.exec(text)) !== null) {
-    start = matchArr.index;
-    end = start + matchArr[0].length;
-    callback(start, end);
-  }
+  getFindIndexes(regex, text)
+    .reverse()
+    .map(({start, end}) => callback(start, end))
 };
 
 const SearchHighlight = (props) => (
